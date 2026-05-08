@@ -418,7 +418,6 @@ document.getElementById('btn-start').addEventListener('click', () => {
 });
 
 document.getElementById('btn-to-menu').addEventListener('click', () => {
-  if (!confirm('メニューに戻りますか？進捗は消えます。')) return;
   goToMenu();
 });
 
