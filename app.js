@@ -186,23 +186,29 @@ function buildBoard() {
 }
 
 function getConflictCells() {
-  const conflicts = new Set();
+  const wrong = new Set();
+  const duplicate = new Set();
   for (let r = 0; r < 9; r++) {
     for (let c = 0; c < 9; c++) {
       const val = userBoard[r][c];
       if (val === 0) continue;
+      // 正解と一致しない入力
+      if (givenBoard[r][c] === 0 && val !== solvedBoard[r][c]) {
+        wrong.add(`${r},${c}`);
+        continue;
+      }
       // 行チェック
       for (let cc = 0; cc < 9; cc++) {
         if (cc !== c && userBoard[r][cc] === val) {
-          conflicts.add(`${r},${c}`);
-          conflicts.add(`${r},${cc}`);
+          duplicate.add(`${r},${c}`);
+          duplicate.add(`${r},${cc}`);
         }
       }
       // 列チェック
       for (let rr = 0; rr < 9; rr++) {
         if (rr !== r && userBoard[rr][c] === val) {
-          conflicts.add(`${r},${c}`);
-          conflicts.add(`${rr},${c}`);
+          duplicate.add(`${r},${c}`);
+          duplicate.add(`${rr},${c}`);
         }
       }
       // ブロックチェック
@@ -211,18 +217,18 @@ function getConflictCells() {
       for (let rr = br; rr < br + 3; rr++) {
         for (let cc = bc; cc < bc + 3; cc++) {
           if ((rr !== r || cc !== c) && userBoard[rr][cc] === val) {
-            conflicts.add(`${r},${c}`);
-            conflicts.add(`${rr},${cc}`);
+            duplicate.add(`${r},${c}`);
+            duplicate.add(`${rr},${cc}`);
           }
         }
       }
     }
   }
-  return conflicts;
+  return { wrong, duplicate };
 }
 
 function renderBoard() {
-  const conflicts = getConflictCells();
+  const { wrong, duplicate } = getConflictCells();
   const cells = boardEl.querySelectorAll('.cell');
   cells.forEach(cell => {
     const r = Number(cell.dataset.row);
@@ -247,7 +253,9 @@ function renderBoard() {
       }
       cell.appendChild(memoDiv);
     }
-    if (conflicts.has(`${r},${c}`)) {
+    if (wrong.has(`${r},${c}`)) {
+      cell.classList.add('wrong');
+    } else if (duplicate.has(`${r},${c}`)) {
       cell.classList.add('conflict');
     }
     if (selectedCell && selectedCell.row === r && selectedCell.col === c) {
@@ -487,11 +495,27 @@ function startNewGame(difficulty = 'medium') {
   }, 30);
 }
 
+function playClearAnimation(callback) {
+  const cells = boardEl.querySelectorAll('.cell');
+  // 対角距離でウェーブ
+  cells.forEach(cell => {
+    const r = Number(cell.dataset.row);
+    const c = Number(cell.dataset.col);
+    const delay = (r + c) * 50;
+    setTimeout(() => cell.classList.add('cell-clear'), delay);
+  });
+  // 最大遅延 = (8+8)*50 = 800ms、さらに500ms待ってコールバック
+  setTimeout(callback, 800 + 500);
+}
+
 function checkComplete() {
   for (let r = 0; r < 9; r++)
     for (let c = 0; c < 9; c++)
       if (userBoard[r][c] !== solvedBoard[r][c]) return;
-  showClearScreen();
+  stopTimer();
+  playClearAnimation(() => {
+    showClearScreen();
+  });
 }
 
 // =============================================
@@ -499,3 +523,13 @@ function checkComplete() {
 // =============================================
 buildBoard();
 showScreen('screen-menu');
+
+// debug
+// document.getElementById('btn-debug-clear').addEventListener('click', () => {
+//   playClearAnimation(() => showClearScreen());
+// });
+
+// プルトゥリフレッシュ・縦スワイプリロード抑制
+document.addEventListener('touchmove', e => {
+  if (e.touches.length === 1) e.preventDefault();
+}, { passive: false });
