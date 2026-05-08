@@ -373,24 +373,23 @@ function onNumInput(num) {
   } else {
     // 通常モード：直接入力、確定数字入力時はメモをクリア
     userBoard[row][col] = num;
-    if (num !== 0) memoBoard[row][col].clear();
+    if (num !== 0) {
+      memoBoard[row][col].clear();
+      // 同行・同列・同ブロックのメモから確定数字を除去
+      const br = Math.floor(row / 3) * 3;
+      const bc = Math.floor(col / 3) * 3;
+      for (let i = 0; i < 9; i++) {
+        memoBoard[row][i].delete(num);
+        memoBoard[i][col].delete(num);
+      }
+      for (let r = br; r < br + 3; r++)
+        for (let c = bc; c < bc + 3; c++)
+          memoBoard[r][c].delete(num);
+    }
     renderBoard();
     checkComplete();
   }
 }
-
-document.getElementById('btn-new-game').addEventListener('click', startNewGame);
-
-document.getElementById('btn-reset').addEventListener('click', () => {
-  if (!confirm('最初からやり直しますか？')) return;
-  userBoard = givenBoard.map(row => [...row]);
-  memoBoard = Array.from({ length: 9 }, () => Array.from({ length: 9 }, () => new Set()));
-  selectedCell = null;
-  history = [];
-  if (memoMode) toggleMemoMode();
-  renderBoard();
-  showMessage('');
-});
 
 document.getElementById('btn-hint').addEventListener('click', () => {
   if (!selectedCell) { showMessage('マスを選択してください', 'info'); return; }
@@ -429,22 +428,22 @@ document.getElementById('btn-to-menu').addEventListener('click', () => {
   goToMenu();
 });
 
-document.getElementById('btn-new-game').addEventListener('click', () => startNewGame(currentDifficulty));
-
-document.getElementById('btn-reset').addEventListener('click', () => {
-  if (!confirm('最初からやり直しますか？')) return;
+document.getElementById('btn-clear-menu').addEventListener('click', goToMenu);
+document.getElementById('btn-clear-retry').addEventListener('click', () => {
+  // 同じ盤面でリスタート
   userBoard = givenBoard.map(row => [...row]);
   memoBoard = Array.from({ length: 9 }, () => Array.from({ length: 9 }, () => new Set()));
   selectedCell = null;
   history = [];
+  hintUsed = 0;
+  hintBadgeEl.textContent = 0;
+  hintBadgeEl.style.display = 'none';
   if (memoMode) toggleMemoMode();
-  startTimer();
+  timerSeconds = 0;
   renderBoard();
-  showMessage('');
+  showScreen('screen-game');
+  startTimer();
 });
-
-document.getElementById('btn-clear-menu').addEventListener('click', goToMenu);
-document.getElementById('btn-clear-retry').addEventListener('click', () => startNewGame(currentDifficulty));
 
 // キーボード入力
 document.addEventListener('keydown', e => {

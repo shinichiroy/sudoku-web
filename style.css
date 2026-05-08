@@ -469,13 +469,13 @@ body {
 #numpad {
   display: grid;
   grid-template-columns: repeat(9, 1fr);
-  gap: 4px;
+  gap: 3px;
   margin-bottom: 16px;
 }
 
 .num-btn {
-  padding: 8px 0;
-  font-size: 1rem;
+  padding: 12px 0;
+  font-size: 1.2rem;
   font-weight: 600;
   border: 2px solid #bee3f8;
   border-radius: 8px;
@@ -500,23 +500,6 @@ body {
   font-size: 0.7rem;
   color: #718096;
   border-color: #e2e8f0;
-}
-
-/* ===== コントロールボタン ===== */
-#controls {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-  margin-bottom: 16px;
-}
-
-#controls .btn-primary,
-#controls .btn-secondary {
-  padding: 11px 4px;
-  font-size: 0.85rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 /* ===== メッセージ ===== */
@@ -544,10 +527,9 @@ footer {
   .action-icon-wrap { width: 40px; height: 40px; }
   .action-icon-wrap i { font-size: 1.1rem; }
   .action-label { font-size: 0.65rem; }
-  #controls button { font-size: 0.78rem; padding: 10px 2px; }
 }
 
 @media (max-width: 360px) {
   #numpad { gap: 3px; }
-  .num-btn { padding: 6px 0; font-size: 0.9rem; }
+  .num-btn { padding: 10px 0; font-size: 1rem; }
 }
