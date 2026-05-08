@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>数独 - Sudoku</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+
+    <!-- ===== メニュー画面 ===== -->
+    <div id="screen-menu" class="screen">
+      <div class="menu-inner">
+        <h1 class="menu-title">数独</h1>
+        <p class="menu-subtitle">Sudoku</p>
+        <div class="menu-difficulty">
+          <p class="menu-section-label">難易度を選んでください</p>
+          <div class="difficulty-cards">
+            <label class="diff-card">
+              <input type="radio" name="difficulty" value="easy" />
+              <span class="diff-card-inner">
+                <span class="diff-name">かんたん</span>
+                <span class="diff-desc">空白 36マス</span>
+              </span>
+            </label>
+            <label class="diff-card">
+              <input type="radio" name="difficulty" value="medium" checked />
+              <span class="diff-card-inner">
+                <span class="diff-name">ふつう</span>
+                <span class="diff-desc">空白 46マス</span>
+              </span>
+            </label>
+            <label class="diff-card">
+              <input type="radio" name="difficulty" value="hard" />
+              <span class="diff-card-inner">
+                <span class="diff-name">むずかしい</span>
+                <span class="diff-desc">空白 55マス</span>
+              </span>
+            </label>
+          </div>
+        </div>
+        <button id="btn-start" class="btn-primary">
+          <i class="fa-solid fa-play"></i> スタート
+        </button>
+      </div>
+    </div>
+
+    <!-- ===== ゲーム画面 ===== -->
+    <div id="screen-game" class="screen hidden">
+      <header class="game-header">
+        <button id="btn-to-menu" class="btn-icon-only" title="メニューへ">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <div class="game-header-center">
+          <span id="game-difficulty-label" class="game-diff-badge"></span>
+          <span id="timer" class="timer">0:00</span>
+        </div>
+        <div style="width:36px"></div>
+      </header>
+
+      <main>
+        <div id="board-container">
+          <div id="board"></div>
+        </div>
+
+        <div id="action-bar">
+          <button id="btn-undo" class="action-btn">
+            <span class="action-icon-wrap">
+              <i class="fa-solid fa-rotate-left"></i>
+            </span>
+            <span class="action-label">元に戻す</span>
+          </button>
+          <button id="btn-erase" class="action-btn">
+            <span class="action-icon-wrap">
+              <i class="fa-solid fa-delete-left"></i>
+            </span>
+            <span class="action-label">消す</span>
+          </button>
+          <button id="btn-memo-toggle" class="action-btn">
+            <span class="action-icon-wrap">
+              <i class="fa-solid fa-pencil"></i>
+              <span id="memo-badge" class="action-badge">OFF</span>
+            </span>
+            <span class="action-label">メモ</span>
+          </button>
+          <button id="btn-hint" class="action-btn">
+            <span class="action-icon-wrap">
+              <i class="fa-solid fa-lightbulb"></i>
+              <span id="hint-badge" class="action-badge" style="display:none">0</span>
+            </span>
+            <span class="action-label">ヒント</span>
+          </button>
+        </div>
+
+        <div id="numpad">
+          <button class="num-btn" data-num="1">1</button>
+          <button class="num-btn" data-num="2">2</button>
+          <button class="num-btn" data-num="3">3</button>
+          <button class="num-btn" data-num="4">4</button>
+          <button class="num-btn" data-num="5">5</button>
+          <button class="num-btn" data-num="6">6</button>
+          <button class="num-btn" data-num="7">7</button>
+          <button class="num-btn" data-num="8">8</button>
+          <button class="num-btn" data-num="9">9</button>
+        </div>
+
+        <div id="controls">
+          <button id="btn-new-game">新しいゲーム</button>
+          <button id="btn-reset">はじめからやり直し</button>
+        </div>
+
+        <div id="message"></div>
+      </main>
+    </div>
+
+    <!-- ===== クリア画面 ===== -->
+    <div id="screen-clear" class="screen hidden">
+      <div class="clear-inner">
+        <div class="clear-icon"><i class="fa-solid fa-trophy"></i></div>
+        <h2 class="clear-title">クリア！</h2>
+        <div class="clear-stats">
+          <div class="clear-stat">
+            <span class="clear-stat-label">難易度</span>
+            <span id="clear-difficulty" class="clear-stat-value"></span>
+          </div>
+          <div class="clear-stat">
+            <span class="clear-stat-label">タイム</span>
+            <span id="clear-time" class="clear-stat-value"></span>
+          </div>
+          <div class="clear-stat">
+            <span class="clear-stat-label">ヒント</span>
+            <span id="clear-hints" class="clear-stat-value"></span>
+          </div>
+        </div>
+        <div class="clear-buttons">
+          <button id="btn-clear-retry" class="btn-secondary">
+            <i class="fa-solid fa-rotate-right"></i> もう一度
+          </button>
+          <button id="btn-clear-menu" class="btn-primary">
+            <i class="fa-solid fa-house"></i> メニューへ
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,542 @@
+/* ===== リセット & ベース ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', 'Noto Sans JP', sans-serif;
+  background: #f0f4f8;
+  color: #2d3748;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0;
+}
+
+#app {
+  width: 100%;
+  max-width: 480px;
+  min-height: 100vh;
+}
+
+/* ===== 画面共通 ===== */
+.screen {
+  width: 100%;
+  min-height: 100vh;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.hidden { display: none !important; }
+
+/* ===== メニュー画面 ===== */
+#screen-menu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(160deg, #ebf8ff 0%, #f0f4f8 100%);
+}
+
+.menu-inner {
+  text-align: center;
+  width: 100%;
+  max-width: 360px;
+}
+
+.menu-title {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #2b6cb0;
+  letter-spacing: 0.1em;
+  margin-bottom: 4px;
+}
+
+.menu-subtitle {
+  font-size: 1rem;
+  color: #a0aec0;
+  letter-spacing: 0.2em;
+  margin-bottom: 40px;
+}
+
+.menu-section-label {
+  font-size: 0.85rem;
+  color: #718096;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.difficulty-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 32px;
+}
+
+.diff-card input[type="radio"] {
+  display: none;
+}
+
+.diff-card-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  background: #fff;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.diff-card input:checked + .diff-card-inner {
+  border-color: #2b6cb0;
+  background: #ebf8ff;
+}
+
+.diff-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #2d3748;
+}
+
+.diff-desc {
+  font-size: 0.8rem;
+  color: #a0aec0;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 40px;
+  font-size: 1rem;
+  font-weight: 700;
+  background: #2b6cb0;
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  width: 100%;
+  justify-content: center;
+}
+
+.btn-primary:hover { background: #2c5282; }
+.btn-primary:active { transform: scale(0.97); }
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 40px;
+  font-size: 1rem;
+  font-weight: 700;
+  background: #fff;
+  color: #2b6cb0;
+  border: 2px solid #2b6cb0;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  justify-content: center;
+}
+
+.btn-secondary:hover { background: #ebf8ff; }
+.btn-secondary:active { transform: scale(0.97); }
+
+/* ===== ゲームヘッダー ===== */
+.game-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.game-header-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.game-diff-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #2b6cb0;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.timer {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #2d3748;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.05em;
+}
+
+.btn-icon-only {
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: none;
+  border-radius: 50%;
+  font-size: 1rem;
+  color: #4a5568;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+
+.btn-icon-only:hover { background: #e2e8f0; }
+
+/* ===== クリア画面 ===== */
+#screen-clear {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(160deg, #f0fff4 0%, #f0f4f8 100%);
+}
+
+.clear-inner {
+  text-align: center;
+  width: 100%;
+  max-width: 360px;
+}
+
+.clear-icon {
+  font-size: 4rem;
+  color: #f6ad55;
+  margin-bottom: 12px;
+}
+
+.clear-title {
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: #276749;
+  margin-bottom: 32px;
+}
+
+.clear-stats {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin-bottom: 40px;
+}
+
+.clear-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.clear-stat-label {
+  font-size: 0.75rem;
+  color: #718096;
+  font-weight: 600;
+}
+
+.clear-stat-value {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #2d3748;
+}
+
+.clear-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2b6cb0;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+}
+
+.difficulty-selector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 0.95rem;
+}
+
+.difficulty-selector select {
+  padding: 4px 8px;
+  border: 1px solid #cbd5e0;
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+/* ===== ボード ===== */
+#board-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+#board {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  grid-template-rows: repeat(9, 1fr);
+  border: 3px solid #2b6cb0;
+  width: 100%;
+  max-width: 400px;
+  aspect-ratio: 1 / 1;
+  background: #fff;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+
+.cell {
+  border-right: 1px solid #a0aec0;
+  border-bottom: 1px solid #a0aec0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(20px, 6vw, 34px);
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+  user-select: none;
+  position: relative;
+}
+
+/* 3x3ブロック境界線（太線） */
+.cell:nth-child(9n+3),
+.cell:nth-child(9n+6) { border-right: 2px solid #4a5568; }
+
+/* 列9（右端）はboardの外枠に任せる */
+.cell:nth-child(9n) { border-right: none; }
+
+/* 行3・行6の下に太線 */
+.cell:nth-child(n+19):nth-child(-n+27),
+.cell:nth-child(n+46):nth-child(-n+54) { border-bottom: 2px solid #4a5568; }
+
+/* 行9（下端）はboardの外枠に任せる */
+.cell:nth-child(n+73) { border-bottom: none; }
+
+.cell.given {
+  color: #1a202c;
+  cursor: default;
+}
+
+.cell.user {
+  color: #2b6cb0;
+}
+
+/* ===== メモ表示 ===== */
+.cell-memos {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  padding: 0;
+}
+
+.memo-num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(9px, 2.6vw, 15px);
+  font-weight: 600;
+  color: #1a202c;
+  line-height: 1;
+}
+
+/* ===== アクションバー ===== */
+#action-bar {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 16px;
+}
+
+.action-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 12px;
+  transition: background 0.15s;
+}
+
+.action-btn:hover { background: #ebf8ff; }
+.action-btn:active { transform: scale(0.95); }
+
+.action-icon-wrap {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f4f8;
+  border-radius: 50%;
+  transition: background 0.15s;
+}
+
+.action-icon-wrap i {
+  font-size: 1.25rem;
+  color: #4a5568;
+}
+
+.action-btn.active .action-icon-wrap {
+  background: #ed8936;
+}
+
+.action-btn.active .action-icon-wrap i {
+  color: #fff;
+}
+
+.action-label {
+  font-size: 0.72rem;
+  color: #718096;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.action-badge {
+  position: absolute;
+  top: -3px;
+  right: -6px;
+  background: #a0aec0;
+  color: #fff;
+  font-size: 0.55rem;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 8px;
+  line-height: 1.6;
+}
+
+.action-badge.on {
+  background: #ed8936;
+}
+
+.cell.selected {
+  background: #ffe066 !important;
+}
+
+.cell.same-num {
+  background: #a8ccee;
+}
+
+.cell.highlight {
+  background: #e2f2fb;
+}
+
+.cell.conflict {
+  color: #c53030 !important;
+  background: #fcd5d5 !important;
+}
+
+.cell.conflict.selected {
+  background: #f9b0b0 !important;
+}
+
+.cell.hint {
+  color: #6b46c1;
+  animation: hint-flash 0.6s ease;
+}
+
+@keyframes hint-flash {
+  0%, 100% { background: #fff; }
+  50%       { background: #e9d8fd; }
+}
+
+/* ===== 数字パッド ===== */
+#numpad {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 4px;
+  margin-bottom: 16px;
+}
+
+.num-btn {
+  padding: 8px 0;
+  font-size: 1rem;
+  font-weight: 600;
+  border: 2px solid #bee3f8;
+  border-radius: 8px;
+  background: #fff;
+  color: #2b6cb0;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.num-btn.completed {
+  background: #f0fff4;
+  border-color: #9ae6b4;
+  color: #276749;
+  cursor: default;
+  opacity: 0.7;
+}
+
+.num-btn:hover { background: #ebf8ff; }
+.num-btn:active { transform: scale(0.95); }
+
+.erase-btn {
+  font-size: 0.7rem;
+  color: #718096;
+  border-color: #e2e8f0;
+}
+
+/* ===== コントロールボタン ===== */
+#controls {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+#controls button {
+  padding: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
+}
+
+#controls button:active { transform: scale(0.97); }
+
+#btn-new-game { background: #2b6cb0; color: #fff; }
+#btn-reset    { background: #276749; color: #fff; }
+
+/* ===== メッセージ ===== */
+#message {
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 600;
+  min-height: 1.5em;
+  color: #2f855a;
+}
+
+#message.error { color: #c53030; }
+#message.info  { color: #2b6cb0; }
+
+/* ===== フッター ===== */
+footer {
+  text-align: center;
+  margin-top: 24px;
+  font-size: 0.8rem;
+  color: #a0aec0;
+}
+
+/* ===== レスポンシブ ===== */
+@media (max-width: 360px) {
+  #numpad { grid-template-columns: repeat(5, 1fr); gap: 4px; }
+  .num-btn { padding: 8px 0; font-size: 1rem; }
+}
